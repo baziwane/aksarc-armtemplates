@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "GEN-UNIQUE"
+        },
+        "location": {
+            "value": "" 
+        },
+        "customLocation": {
+            "value": ""
+        },
+        "resourceTags": {
+            "value": {}
+        },
+        "enableAHUB": {
+            "value": "" 
+        },
+        "sshRSAPublicKey": {
+            "value": "GEN-SSH-PUB-KEY"
+        },
+        "controlPlaneNodeCount": {
+            "value": 1 
+        },
+        "controlPlaneVMSize": {
+            "value": "" 
+        },
+        "controlPlaneOsType": {
+            "value": "Linux" 
+        },
+        "kubernetesVersion": {
+            "value": "" 
+        },
+        "agentName": {
+            "value": ""
+        },
+        "agentVMSize": {
+            "value": "" 
+        },
+        "agentCount": {
+            "value": 1
+        },
+        "nodeTaintList": {
+            "value": [
+            ] 
+        },
+        "vnetSubnetIds": {
+            "value": [
+            ]
+        },
+         "storageSpaceIds": {
+            "value": [
+            ]
+        }
+    }
+}

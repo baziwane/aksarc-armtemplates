@@ -1,0 +1,191 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the AKS Arc Cluster resource."
+            }
+        },
+         "resourceName": {
+            "type": "string",
+            "defaultValue": "aks-arc-cluster",
+            "metadata": {
+                "description": "The name of the AKS Arc Cluster resource."
+            }
+        },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {}
+        },
+        "sshRSAPublicKey": {
+            "type": "string",
+            "metadata": {
+                "description": "Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH '"
+            }
+        },
+        "controlPlaneNodeCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "minValue": 1,
+            "maxValue": 5,
+            "metadata": {
+                "description": "The number of control plane nodes for the cluster."
+            }
+        },
+        "controlPlaneVMSize": {
+            "type": "string",
+            "defaultValue": "Standard_A4_v2",
+            "metadata": {
+                "description": "The VM size for control plane."
+            }
+        },
+        "controlPlaneOsType": {
+            "type": "string",
+            "defaultValue": "Linux",
+            "allowedValues": [
+                "Linux", "Windows"
+            ],
+            "metadata": {
+                "description": "The type of operating system."
+            }
+        },
+        "enableAHUB": {
+            "type": "string",
+            "defaultValue": "NotApplicable",
+            "metadata": {
+                "description": "Azure Hybrid Benefit for Windows Server licenses. NotApplicable, True, False."
+            }
+        },
+        "agentName": {
+            "type": "string",
+            "defaultValue": "nodepool",
+            "metadata": {
+                "description": "The name of the node pool."
+            }
+        },
+         "agentVMSize": {
+            "type": "string",
+            "defaultValue": "Standard_A4_v2",
+            "metadata": {
+                "description": "The VM size for node pools."
+            }
+        },
+        "agentCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "minValue": 1,
+            "maxValue": 50,
+            "metadata": {
+                "description": "The number of nodes for the cluster."
+            }
+        },
+        "kubernetesVersion": {
+            "type": "string",
+            "defaultValue": "1.24.6",
+            "metadata": {
+                "description": "The version of Kubernetes."
+            }
+        },
+        "podCidr": {
+            "type": "string",
+            "defaultValue": "10.244.0.0/16",
+            "metadata": {
+                "description": "CIDR for pods."
+            }
+        },
+        "networkPolicy": {
+            "type": "string",
+            "defaultValue": "calico",
+            "metadata": {
+                "description": "The only supported Network policy is Calico"
+            }
+        },
+        "vnetSubnetIds": {
+            "type": "array",
+            "metadata": {
+                "description": "Subnet Ids for the AKS cluster."
+            }
+        },
+        "storageSpaceIds": {
+            "type": "array",
+            "metadata": {
+                "description": "Storage space Ids for the AKS cluster."
+            }
+        },
+        "nodeTaintList": {
+            "type": "array",
+            "metadata": {
+                "description": "Node taints."
+            }
+        },
+         "customLocation": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2024-01-01",
+            "dependsOn": [],
+            "type": "Microsoft.HybridContainerService/provisionedClusterInstances",
+            "location": "[parameters('location')]",
+            "Name": "[parameters('resourceName')]",
+            "tags": "[parameters('resourceTags')]",
+            "identity": {
+                "type": "SystemAssigned"
+            }, 
+            "properties": {
+                "agentPoolProfiles": [
+                    {
+                        "name": "[parameters('agentName')]",
+                        "count": "[parameters('agentCount')]",
+                        "vmSize": "[parameters('agentVMSize')]",
+                        "osType": "Linux",
+                        "nodeLabels": {
+                            "env": "dev",
+                            "goal": "test"
+                        },
+                        "nodeTaints": "[parameters('nodeTaintList')]"
+                    }
+                ],
+                "cloudProviderProfile": {
+                    "infraNetworkProfile": {
+                        "vnetSubnetIds": "[parameters('vnetSubnetIds')]"
+                    },
+                    "infraStorageProfile": {
+                        "storageSpaceIds": "[parameters('storageSpaceIds')]"
+                    }
+                },
+                "controlPlane": {
+                    "count": "[parameters('controlPlaneNodeCount')]",
+                    "osType": "[parameters('controlPlaneOsType')]",
+                    "vmSize": "[parameters('controlPlaneVMSize')]"
+                },
+                "kubernetesVersion": "[parameters('kubernetesVersion')]",
+                "licenseProfile": {
+                    "azureHybridBenefit": "[parameters('enableAHUB')]"
+                },
+                "linuxProfile": {
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "keyData": "[parameters('sshRSAPublicKey')]"
+                                }
+                            ]
+                        }
+                },
+                "networkProfile": {
+                    "networkPolicy": "[parameters('networkPolicy')]",
+                    "podCidr": "[parameters('podCidr')]"
+                }
+            }
+           /* "extendedLocation": {
+                "type": "customLocation",
+                "name": "[parameters('customLocation')]"
+            }*/
+        }
+    ],
+    "outputs": {}
+}
