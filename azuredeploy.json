@@ -22,7 +22,6 @@
         },
       "sshRSAPublicKey": {
           "type": "string",
-          "defaultValue": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDY4coMa0B4lPs6NMxUfjbhl0OSoG9osV9tE0IKAAJhdFvu19qwhlfY2WQ44EN4vvvcWM4GuNqRC8UQt1tP6d6wpd4x+J1wW2I+VQzE3uzUolDPI7pPsI9WS7pTRKDFr4rG9YP0iCpPzbgM7dop/nRCjEKvdSnEBSb4UMT4mMARErQWtJEJM6IVJEHy62iHWvYZ7kZt0H8IBDQOIGiCYCZLSQK6Gy+WCYEoRfKfTQRwWCBdAheaLb76b/QCrUo4uCzl305wirhBFCw9rscvz9OhVAw7SjZgBNVA1a0kJPxdnH//wrtvWWLlPUMuMVuKCjXg2M9Vy4rxDIBFj76KtmlUqFDyQxEGiAgJZDjNcdJnb+7uIAxuOxpXZGY3SgZ9HJhGaS/p2KiE82aTWESFY3yz1tZRLwuIXERL8ySqgeg9dkqqqTLzHBz1F4b75BhkA6xySmKmqBJ6QR4RjN2Zm/TJEHsMWBGJBdNsz8muQwfIRnKYcv8n9FVJhTwTnrkMkqE= generated-by-azure",
           "metadata": {
               "description": "Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH '"
           }
@@ -73,7 +72,6 @@
         },
           "kubernetesVersion": {
               "type": "string",
-              "defaultValue": "1.26.3",
               "metadata": {
                   "description": "The version of Kubernetes."
               }
@@ -89,7 +87,6 @@
           },
           "controlPlaneIp": {
             "type": "string",
-            "defaultValue": "100.72.19.222",
               "metadata": {
                   "description": "Control plane IP address."
               }
@@ -123,7 +120,6 @@
           },
           "customLocation": {
             "type": "string",
-            "defaultValue": "/subscriptions/de3c4d5e-af08-451a-a873-438d86ab6f4b/resourcegroups/edgeci-registration-rr1n22r0915/providers/microsoft.extendedlocation/customlocations/cluster-884ad0596b2d4308b3380ff7f3ba9524-mocarb-cl",
             "metadata": {
                   "description": "Fully qualified custom location resource Id."
               }
