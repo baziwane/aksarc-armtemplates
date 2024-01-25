@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "resourceName": {
+        "provisionedClusterName": {
             "value": "GEN-UNIQUE"
         },
         "location": {
@@ -29,6 +29,9 @@
         "controlPlaneOsType": {
             "value": "Linux" 
         },
+        "controlPlaneIp": {
+            "value": "" 
+        },
         "kubernetesVersion": {
             "value": "" 
         },
@@ -41,17 +44,21 @@
         "agentCount": {
             "value": 1
         },
-        "nodeTaintList": {
-            "value": [
-            ] 
+        "agentOsType": {
+            "value": "Linux"
+        },
+        "loadBalancerCount": {
+            "value": 0
         },
         "vnetSubnetIds": {
             "value": [
             ]
         },
-         "storageSpaceIds": {
-            "value": [
-            ]
+        "podCidr": {
+            "value": ""
+        },
+        "networkPolicy": {
+           "value": "calico"
         }
     }
 }
